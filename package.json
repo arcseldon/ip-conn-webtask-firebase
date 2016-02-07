@@ -1,0 +1,59 @@
+{
+  "name": "ip-conn-webtask-firebase",
+  "version": "0.0.1",
+  "description": "auth0 ip address to connections lookup webtask",
+  "main": "build/main/ipconn.js",
+  "author": "arcseldon",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean": "./node_modules/.bin/rimraf build && mkdir build",
+    "compile": "babel --presets es2015,stage-0 -d build/ src/",
+    "copyfiles": "cp src/tools/sample.csv build/tools && cp src/test/tools/*.sh build/test/tools",
+    "mkdirs": "mkdir -p build/tools/output && mkdir -p build/test/tools/output",
+    "postcompile": "npm run copyfiles && npm run mkdirs",
+    "watch:compile": "npm run compile -- --watch",
+    "build": "npm run clean && npm run lint && npm run compile",
+    "test": "./node_modules/.bin/mocha build/test/main --recursive --colors -u bdd -R spec --bail",
+    "watch:test": "npm run test -- --watch -R min",
+    "cov:test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- build/test/main/**/*.js -R spec",
+    "lint": "./node_modules/.bin/eslint --fix src/**/*.js || true",
+    "watch:lint": "watch 'npm run lint' .",
+    "loader": "node ./build/tools/loader.js",
+    "help:loader": "npm run loader -- --help",
+    "mockRunner": "node ./build/test/tools/mockRunner.js",
+    "help:mockRunner": "npm run mockRunner -- --help"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": false,
+      "node": true,
+      "mocha": true,
+      "es6": true
+    }
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "commander": "^2.9.0",
+    "dotenv": "^2.0.0",
+    "firebase": "^2.4.0",
+    "ipaddr.js": "^1.1.0",
+    "lodash": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "chai": "^3.5.0",
+    "chance": "^0.8.0",
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "nock": "^7.0.2",
+    "proxyquire": "^1.7.4",
+    "ramda": "^0.19.1",
+    "rimraf": "^2.5.1",
+    "sinon": "^1.17.3",
+    "watch": "^0.17.1"
+  }
+}

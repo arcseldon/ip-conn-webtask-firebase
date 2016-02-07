@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for main/ipconn.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">main/</a> ipconn.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75.38% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>49/65</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.57% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>16/23</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64.29% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75.38% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>49/65</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// author arcseldon@icloud.com
+'use strict';
+&nbsp;
+/***************************************************
+ * Webtask expects to receive requests containing IP
+ * address request param. Does a lookup for a matching
+ * connection based on IP against Firebase hosted &amp;
+ * optimised IP to Connection mapping.
+ ***************************************************/
+&nbsp;
+var Firebase = require('firebase'),
+    ipUtils = require('ipaddr.js'),
+    _ = require('lodash');
+&nbsp;
+var getConfig = function getConfig(rawConfig) {
+  return rawConfig.map(function (item) {
+    return {
+      cidr: ipUtils.parseCIDR(item.cidr),
+      conn: { connection: item.connection }
+    };
+  });
+},
+    unknownConn = { connection: 'unknown' },
+    getConn = function getConn(config, ip) {
+  var matchIndex = _.findIndex(config, function (cidrConn) {
+    return ip.match(cidrConn.cidr);
+  });
+  return matchIndex !== -1 ? config[matchIndex].conn : <span class="branch-1 cbranch-no" title="branch not covered" >unknownConn;</span>
+},
+    ipv4SplitBy = {
+  by8Bits: <span class="fstat-no" title="function not covered" >function by8Bits(ip) {</span>
+<span class="cstat-no" title="statement not covered" >    return ip.split('.')[0];</span>
+  },
+  by16Bits: function by16Bits(ip) {
+    return [ip.split('.')[0], ip.split('.')[1]].join(':');
+  },
+  by24Bits: <span class="fstat-no" title="function not covered" >function by24Bits(ip) {</span>
+<span class="cstat-no" title="statement not covered" >    return [ip.split('.')[0], ip.split('.')[1], ip.split('.')[2]].join(':');</span>
+  }
+},
+    ipv6SplitBy = {
+  by16Bits: <span class="fstat-no" title="function not covered" >function by16Bits(ip) {</span>
+<span class="cstat-no" title="statement not covered" >    return ip.split(':')[0];</span>
+  },
+  by32Bits: function by32Bits(ip) {
+    return [ip.split(':')[0], ip.split(':')[1]].join(':');
+  },
+  by48Bits: <span class="fstat-no" title="function not covered" >function by48Bits(ip) {</span>
+<span class="cstat-no" title="statement not covered" >    return [ip.split(':')[0], ip.split(':')[1], ip.split(':')[2]].join(':');</span>
+  }
+};
+&nbsp;
+module.exports = function (ctx, done) {
+&nbsp;
+  var FIREBASE = ctx.data.FIREBASE;
+&nbsp;
+  /***************************************************
+   * Set up firebase params based on secret FIREBASE key
+   ***************************************************/
+&nbsp;
+  if (!FIREBASE) {
+    return done(Error('FIREBASE is required'));
+  }
+  if (FIREBASE.split('|').length !== 4) {
+    return done(Error('FIREBASE format is incorrect. Use &lt;endpoint&gt;\|&lt;secret&gt;\|&lt;ipv4GroupBy&gt;\|&lt;ipv6GroupBy&gt;'));
+  }
+&nbsp;
+  var endpoint = FIREBASE.split('|')[0];
+  var secret = FIREBASE.split('|')[1];
+  var ipv4GroupBy = FIREBASE.split('|')[2];
+  var ipv6GroupBy = FIREBASE.split('|')[3];
+&nbsp;
+  /***************************************************
+   * validate group by inputs
+   ***************************************************/
+&nbsp;
+  var ipv4GroupByWhiteList = _.concat(Object.keys(ipv4SplitBy), 'none');
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!_.includes(ipv4GroupByWhiteList, ipv4GroupBy)) {
+<span class="cstat-no" title="statement not covered" >    return done('Error: invalid ipv4GroupBy. Valid options: ' + ipv4GroupByWhiteList);</span>
+  }
+&nbsp;
+  var ipv6GroupByWhiteList = _.concat(Object.keys(ipv6SplitBy), 'none');
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!_.includes(ipv6GroupByWhiteList, ipv6GroupBy)) {
+<span class="cstat-no" title="statement not covered" >    return done('Error: invalid ipv6GroupBy. Valid options: ' + ipv6GroupByWhiteList);</span>
+  }
+&nbsp;
+  /***************************************************
+   * validate IP param
+   ***************************************************/
+&nbsp;
+  var ipParam = ctx.data.ip;
+&nbsp;
+  //validate if IPv4 or IPv6 address
+  if (!ipUtils.isValid(ipParam)) {
+    console.error('Invalid ip parameter: ' + ipParam);
+    return done('Error: invalid ip parameter');
+  }
+&nbsp;
+  var ip = ipUtils.parse(ipParam);
+&nbsp;
+  console.log('IP Address: ' + ip + '\n');
+&nbsp;
+  /***************************************************
+   * determine correct URL to call based
+   * on IP type and groupby
+   ***************************************************/
+&nbsp;
+  switch (ip.kind()) {
+    case 'ipv4':
+      endpoint = ipv4GroupBy !== 'none' ? endpoint + '/ipv4/' + ipv4SplitBy[ipv4GroupBy](ipParam) : <span class="branch-1 cbranch-no" title="branch not covered" >endpoint + '/ipv4/';</span>
+      console.log('\n\n ' + endpoint);
+      break;
+    case 'ipv6':
+      endpoint = ipv6GroupBy !== 'none' ? endpoint + '/ipv6/' + ipv6SplitBy[ipv6GroupBy](ipParam) : <span class="branch-1 cbranch-no" title="branch not covered" >endpoint + '/ipv6/';</span>
+      console.log('\n\n ' + endpoint);
+      break;
+<span class="branch-2 cbranch-no" title="branch not covered" >    default:</span>
+<span class="cstat-no" title="statement not covered" >      console.error('Unrecognised ip type');</span>
+<span class="cstat-no" title="statement not covered" >      return done({ error: 'Service unavailable' });</span>
+  }
+&nbsp;
+  console.log('Derived endpoint: ' + endpoint + '\n');
+&nbsp;
+  /***************************************************
+   * Hand over to firebase
+   ***************************************************/
+&nbsp;
+  var firebase = undefined;
+  try {
+    firebase = new Firebase(endpoint);
+  } catch (e) {
+<span class="cstat-no" title="statement not covered" >    console.error(e);</span>
+<span class="cstat-no" title="statement not covered" >    return done({ error: 'Firebase connection error, check endpoint' });</span>
+  }
+&nbsp;
+  firebase.authWithCustomToken(secret, function (error) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
+<span class="cstat-no" title="statement not covered" >      console.error(error);</span>
+<span class="cstat-no" title="statement not covered" >      return done({ error: 'Service unavailable' });</span>
+    }
+  });
+&nbsp;
+  /***************************************************
+   * asynchronously await for a 'value' event
+   * then use the config returned to lookup IP
+   ***************************************************/
+&nbsp;
+  firebase.on('value', function (config) {
+    try {
+      var rawConfig = config.val();
+      if (!rawConfig) {
+        return done(null, unknownConn);
+      }
+      var parsedConfig = getConfig(rawConfig);
+      return done(null, getConn(parsedConfig, ip));
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      console.error('Failed to parse config: ' + error);</span>
+<span class="cstat-no" title="statement not covered" >      return done({ error: 'Service unavailable' });</span>
+    }
+  }, <span class="fstat-no" title="function not covered" >function (error) {</span>
+<span class="cstat-no" title="statement not covered" >    console.error('Error: ' + error.code);</span>
+<span class="cstat-no" title="statement not covered" >    return done({ error: 'Service unavailable' });</span>
+  });
+};</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Feb 07 2016 15:29:02 GMT+0900 (JST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
