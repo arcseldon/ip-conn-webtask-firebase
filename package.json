@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "./node_modules/.bin/rimraf build && mkdir build",
     "compile": "babel --presets es2015,stage-0 -d build/ src/",
-    "copyfiles": "cp src/tools/sample.csv build/tools && cp src/test/tools/*.sh build/test/tools",
+    "copyfiles": "rm -f build/tools/*.csv && cp src/tools/sample.csv build/tools",
     "mkdirs": "mkdir -p build/tools/output && mkdir -p build/test/tools/output",
     "postcompile": "npm run copyfiles && npm run mkdirs",
     "watch:compile": "npm run compile -- --watch",
@@ -22,8 +22,23 @@
     "loader": "node ./build/tools/loader.js",
     "help:loader": "npm run loader -- --help",
     "mockRunner": "node ./build/test/tools/mockRunner.js",
-    "help:mockRunner": "npm run mockRunner -- --help"
+    "help:mockRunner": "npm run mockRunner -- --help",
+    "ipinjector": "node ./build/test/tools/ipInjector.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:arcseldon/ip-conn-webtask-firebase.git"
+  },
+  "keywords": [
+    "auth0",
+    "ip",
+    "lookup",
+    "ip-conn-webtask-firebase",
+    "ip",
+    "connection",
+    "webtask",
+    "firebase"
+  ],
   "eslintConfig": {
     "env": {
       "browser": false,
@@ -38,7 +53,9 @@
     "dotenv": "^2.0.0",
     "firebase": "^2.4.0",
     "ipaddr.js": "^1.1.0",
-    "lodash": "^4.2.0"
+    "lodash": "^4.2.1",
+    "ramda": "^0.19.1",
+    "request": "^2.69.0"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",
@@ -51,7 +68,6 @@
     "mocha": "^2.4.5",
     "nock": "^7.0.2",
     "proxyquire": "^1.7.4",
-    "ramda": "^0.19.1",
     "rimraf": "^2.5.1",
     "sinon": "^1.17.3",
     "watch": "^0.17.1"

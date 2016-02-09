@@ -61,8 +61,8 @@ const fs = require('fs'),
 let count = 1000;
 const COUNT_MAX = 10000;
 
-const ipv4GroupByRegex = /^(none|by8bits|by16bits|by24bits)$/;
-const ipv6GroupByRegex = /^(none|by16bits|by32bits|by48bits)$/;
+const ipv4GroupByRegex = /^(none|by8Bits|by16Bits|by24Bits)$/;
+const ipv6GroupByRegex = /^(none|by16Bits|by32Bits|by48Bits)$/;
 
 const OUTPUT_FILE = `${__dirname}/output/mockConfigMap.json`;
 

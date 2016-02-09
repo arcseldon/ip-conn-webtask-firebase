@@ -43,15 +43,15 @@ const ipv4Meta = (groupBy) => {
       meta.ipv4NetMasks = [8, 16, 24, 32];
       meta.ipv4GroupedByFn = ipv4GroupBy.by8Bits;
       break;
-    case 'by8bits':
+    case 'by8Bits':
       meta.ipv4NetMasks = [8, 16, 24, 32];
       meta.ipv4GroupedByFn = ipv4GroupBy.by8Bits;
       break;
-    case 'by16bits':
+    case 'by16Bits':
       meta.ipv4NetMasks = [16, 24, 32];
       meta.ipv4GroupedByFn = ipv4GroupBy.by16Bits;
       break;
-    case 'by24bits':
+    case 'by24Bits':
       meta.ipv4NetMasks = [24, 32];
       meta.ipv4GroupedByFn = ipv4GroupBy.by24Bits;
       break;
@@ -71,15 +71,15 @@ const ipv6Meta = (groupBy) => {
       meta.ipv6NetMasks = [16, 32, 48, 64];
       meta.ipv6GroupedByFn = ipv6GroupBy.by16Bits;
       break;
-    case 'by16bits':
+    case 'by16Bits':
       meta.ipv6NetMasks = [16, 32, 48, 64];
       meta.ipv6GroupedByFn = ipv6GroupBy.by16Bits;
       break;
-    case 'by32bits':
+    case 'by32Bits':
       meta.ipv6NetMasks = [32, 48, 64];
       meta.ipv6GroupedByFn = ipv6GroupBy.by32Bits;
       break;
-    case 'by48bits':
+    case 'by48Bits':
       meta.ipv6NetMasks = [48, 64];
       meta.ipv6GroupedByFn = ipv6GroupBy.by48Bits;
       break;

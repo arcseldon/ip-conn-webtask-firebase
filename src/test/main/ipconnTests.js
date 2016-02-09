@@ -130,6 +130,18 @@ describe('ip-conn testcases', () => {
       lctx.data.ip = '83.35.4.6';
       webtask(lctx, callbackWith(done));
     });
+
+    it('should treat existing ipv4 match as known connection', (done) => {
+      lctx.data.ip = '83.29.4.3';
+      webtask(lctx, function (err, data) {
+        if (err) {
+          console.error(err);
+        }
+        expect(err).to.not.exist;
+        expect(data.connection).to.equal('fabrikam-adfs');
+        done();
+      });
+    });
   });
 
 

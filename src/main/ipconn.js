@@ -15,13 +15,13 @@
 
 const Firebase = require('firebase'),
   ipUtils = require('ipaddr.js'),
-  _ = require('lodash');
+  R = require('ramda');
 
 const getConfig = (rawConfig) => {
     return rawConfig.map((item) => {
       return {
         cidr: ipUtils.parseCIDR(item.cidr),
-        conn: {connection: item.connection}
+        connection: {connection: item.connection}
       };
     });
   },
@@ -29,10 +29,10 @@ const getConfig = (rawConfig) => {
   unknownConn = {connection: 'unknown'},
 
   getConn = (config, ip) => {
-    const matchIndex = _.findIndex(config, (cidrConn) => {
+    const matchIndex = R.findIndex((cidrConn) => {
       return ip.match(cidrConn.cidr);
-    });
-    return (matchIndex !== -1) ? config[matchIndex].conn : unknownConn;
+    })(config);
+    return (matchIndex !== -1) ? config[matchIndex].connection : unknownConn;
   },
 
   ipv4SplitBy = {
@@ -88,15 +88,15 @@ module.exports = function (ctx, done) {
    * validate group by inputs
    ***************************************************/
 
-  const ipv4GroupByWhiteList = _.concat(Object.keys(ipv4SplitBy), 'none');
+  const ipv4GroupByWhiteList = R.concat(Object.keys(ipv4SplitBy), 'none');
 
-  if (!_.includes(ipv4GroupByWhiteList, ipv4GroupBy)) {
+  if (!R.contains(ipv4GroupBy, ipv4GroupByWhiteList)) {
     return done(`Error: invalid ipv4GroupBy. Valid options: ${ipv4GroupByWhiteList}`);
   }
 
-  const ipv6GroupByWhiteList = _.concat(Object.keys(ipv6SplitBy), 'none');
+  const ipv6GroupByWhiteList = R.concat(Object.keys(ipv6SplitBy), 'none');
 
-  if (!_.includes(ipv6GroupByWhiteList, ipv6GroupBy)) {
+  if (!R.contains(ipv6GroupBy, ipv6GroupByWhiteList)) {
     return done(`Error: invalid ipv6GroupBy. Valid options: ${ipv6GroupByWhiteList}`);
   }
 
@@ -126,13 +126,11 @@ module.exports = function (ctx, done) {
       endpoint = (ipv4GroupBy !== 'none') ?
         `${endpoint}/ipv4/${ipv4SplitBy[ipv4GroupBy](ipParam)}` :
         `${endpoint}/ipv4/`;
-      console.log(`\n\n ${endpoint}`);
       break;
     case 'ipv6':
       endpoint = (ipv6GroupBy !== 'none') ?
         `${endpoint}/ipv6/${ipv6SplitBy[ipv6GroupBy](ipParam)}` :
         `${endpoint}/ipv6/`;
-      console.log(`\n\n ${endpoint}`);
       break;
     default:
       console.error('Unrecognised ip type');

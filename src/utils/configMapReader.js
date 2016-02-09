@@ -23,7 +23,6 @@ const fs = require('fs'),
 
 module.exports = R.curry((filePath, cb) => {
 
-  //TODO-arcs - consider introduction of csv library here
   const TUPLE_SEPARATOR = ',';
 
   const isNotEmpty = function (line) {
@@ -36,6 +35,8 @@ module.exports = R.curry((filePath, cb) => {
     }
     try {
       const lines = R.filter(isNotEmpty, data.split('\n'));
+      const strEq = R.eqBy(String);
+      const uniqueLines = R.uniqWith(strEq)(lines);
       const mapIndexed = R.addIndex(R.map);
       const mappings = mapIndexed((line, i) => {
         try {
@@ -43,14 +44,14 @@ module.exports = R.curry((filePath, cb) => {
           assert(parts.length === 2, 'Invalid line detected');
           const cidr = parts[0].trim();
           assert(!/\s/g.test(cidr), 'Illegal spacing in CIDR');
-          const conn = parts[1].trim();
-          assert(!/\s/g.test(conn), 'Illegal spacing in connection name');
+          const connection = parts[1].trim();
+          assert(!/\s/g.test(connection), 'Illegal spacing in connection name');
           assert(ipUtils.isValid(cidr.split('/')[0]), 'Invalid IP');
-          return {cidr, conn};
+          return {cidr, connection};
         } catch (e) {
           cb(`File parse error at or near line ${i}: ${e.message}`);
         }
-      }, lines);
+      }, uniqueLines);
       const partitionByIpType = R.partition(function (item) {
         const ip = item.cidr.split('/')[0];
         return ipUtils.parse(ip).kind() === 'ipv4';

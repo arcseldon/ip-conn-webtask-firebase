@@ -29,7 +29,7 @@ No match found:
 }
 ```
 
-![run cmd](img/run.gif)
+![run cmd](https://raw.githubusercontent.com/arcseldon/ip-conn-webtask-firebase/master/img/run.gif)
 
 
 ### Motivation
@@ -103,23 +103,28 @@ Under **Security and Rules** of left-hand nav-bar paste the following:
 }
 ```
 
-![firebase security](img/firebase_security.jpg)
+![firebase security](https://raw.githubusercontent.com/arcseldon/ip-conn-webtask-firebase/master/img/firebase_security1.jpg)
 
 
 Your FIREBASE_SECRET is located under the **Secrets** section on left-hand nav-bar.
 
-![firebase secret](img/firebase_secret.jpg)
+![firebase secret](https://raw.githubusercontent.com/arcseldon/ip-conn-webtask-firebase/master/img/firebase_secret.jpg)
 
-In the base of this project, create a file called `.env`
+In the base of this project, copy `env`, and create a file called `.env`
 
 It should look as follows:
 
 FIREBASE_OVERWRITE=true<br/>
-FIREBASE_URL=https://<YOUR_APP_NAME>.firebaseio.com<br/>
-FIREBASE_TOKEN=<YOUR_FIREBASE_SECRET><br/>
+FIREBASE_URL=https://YOUR_APP_NAME.firebaseio.com<br/>
+FIREBASE_TOKEN=YOUR_FIREBASE_SECRET<br/>
+AUTH0_DOMAIN_URL=https://YOUR_PROFILE.auth0.com/user/ip<br/>
+AUTH0_CONNECTION=YOUR_CONNNECTION<br/>
 
 The reason for this, is that your sensitive information will be referenced as environment variables.
 You could alternatively, just run the scripts with the above environment variables referenced.
+
+The last two entries are only actually required for running a functional test / demo to ensure everything
+working - see special section later in this readme for further details.
 
 Ok, that's it!  Let's get setup out of the way next..
 
@@ -158,23 +163,25 @@ This should output something like:
 ```
  Usage: loader [options]
 
-  Options:
+   Options:
 
-    -h, --help                      output usage information
-    -V, --version                   output the version number
-    -g --ipv4GroupBy [ipv4GroupBy]  ipv4GroupBy
-    -g --ipv6GroupBy [ipv6GroupBy]  ipv6GroupBy
-    -d --deploy                     Do config deployment to firebase
+     -h, --help                      output usage information
+     -V, --version                   output the version number
+     -g --ipv4GroupBy [ipv4GroupBy]  ipv4GroupBy
+     -g --ipv6GroupBy [ipv6GroupBy]  ipv6GroupBy
+     -t, --taskname [taskname]       The task name to register for webtask, required if using --deploy
+     -d --deploy                     Do config deployment to firebase & deploy webtask
 
-  Converts simple csv file with CIDR, Connection pairs into firebase config
-  Example with options: --ipv4GroupBy by16bits --ipv6GroupBy by48bits --deploy
-  Will group the ipv4 cidrs by first 16 bits and ipv6 cidrs by first 48 bits
-  The --deploy will autodeploy the configuraiton to your firebase app
-  Input file should be named mapping.csv, located at: <your path>/ip-conn-webtask-firebase/build/tools/config.csv.
-  Format, once per line:  cidr, connection_name
-  Example line:  83.29.4.2/16, fabrikam-adfs
-  For an example input file, see: <your path>/ip-conn-webtask-firebase/build/tools/sample.csv
-  Configuration output is written to: <your path>/ip-conn-webtask-firebase/build/tools/output/configMap.json
+   Converts simple csv file with CIDR, Connection pairs into firebase config
+   Example with options: --ipv4GroupBy by16bits --ipv6GroupBy by48bits --deploy
+   Will group the ipv4 cidrs by first 16 bits and ipv6 cidrs by first 48 bits
+   The --deploy will autodeploy the configuraiton to your firebase app
+   Input file should be named mapping.csv, located at: /Users/arcseldon/work/github/auth0/ip-conn-webtask-firebase/build/tools/config.csv.
+   Format, once per line:  cidr, connection_name
+   Example line:  83.29.4.2/16, fabrikam-adfs
+   For an example input file, see: /Users/arcseldon/work/github/auth0/ip-conn-webtask-firebase/build/tools/sample.csv
+   Configuration output is written to: /Users/arcseldon/work/github/auth0/ip-conn-webtask-firebase/build/tools/output/configMap.json
+
 ```
 
 To see all the project NPM run commands use:
@@ -191,9 +198,10 @@ $ ./loader.sh
 
 Your configuration should now be loaded into Firebase. Check your firebase application Data online, to ensure it uploaded correctly.
 
-![firebase data](img/firebase_data.jpg)
+![firebase data](https://raw.githubusercontent.com/arcseldon/ip-conn-webtask-firebase/master/img/firebase_data.jpg)
 
-Rationale:
+
+#### Rationale:
 
 So here is what we are trying to achieve:
 
@@ -286,12 +294,12 @@ https://<YOUR_APP_NAME>.firebaseio.com/ipv4/83:29
 or
 
 ```
-https://<YOUR_APP_NAME>.firebaseio.com/ipv4/200b:af16
+https://<YOUR_APP_NAME>.firebaseio.com/ipv6/200b:af16
 ```
 
 In our contrived example, there are no gains, but if we had 100s, perhaps 1000s of records the performance differences are considerable.
 
-Feel free to use the mockRunner tool to experiment with performance and configuraiton options.
+Feel free to use the mockRunner tool to experiment with performance and configuration options.
 
 ```
 npm run help:mockRunner
@@ -316,6 +324,14 @@ Usage: mockRunner [options]
   Output is written to: /your_project_path/ip-conn-webtask-firebase/build/test/tools/output/mockConfigMap.json
 ```
 
+You can execute:
+
+```
+./mockRunner.sh
+```
+
+to get started, with some configuration settings already specified. This will generate 10000 unique IPv4 / IPv6 CIDRs to play with,
+and also include the test fixtures needed so that Unit tests pointed at Firebase still work.
 
 ### Deploy
 
@@ -372,10 +388,35 @@ For an unknown IP address you will see:
 
 True errors will be reported as such.
 
-Please contact your Auth0 represetative if you require any further assistance.
+Please contact your Auth0 representative if you require any further assistance.
 
-Also, please see our **ip-conn-webtask-firebase** webtask for a truly scaled version, with out of the box
-configuration support via Firebase, and the ability to support 1000s of CIDRs with excellent performance characteristics
+### Demo / Functional Testing
+
+You should have already copied the `env` file in base of the project, to `.env`.
+
+You need to make sure these two entries are populated, for example:
+
+AUTH0_DOMAIN_URL=https://your_profile_name.auth0.com/user/ip<br/>
+AUTH0_CONNECTION=twitter<br/>
+
+Then run:
+
+```
+$ ./demo.sh
+```
+
+This should:
+
+Retrieve your IP as known to Auth0 (this also works running over VPN etc)<br/>
+Inject that IP into a sample config.csv<br/>
+Create and deploy the webtask acording to sample config.csv<br/>
+Create and execute a `curl` command to the webtask URL endpoint using your IP<br/>
+
+
+Result should be the registered `connection name` you provided in `.env`
+
+If you ensure that the `connection name` matches an actual Connection you are using,
+then you can then automaticaly login using that Connection via your custom login page.
 
 
 ### Note on O/S support:
@@ -412,6 +453,20 @@ npm run cov:test
 ```
 
 to get some coverage metrics. Will be written to `coverage` directory - see *coverage/Icov-report/index.html* for details.
+
+The main TestSuite will auto-populate Firebase on every run with a random selection of 3 different groupedBy sizes
+for the same test fixture data. You can also use
+
+```
+
+FIREBASE_OVERWRITE=true
+```
+
+environment variable to switch off the overwrite behaviour. Just set to `false` (in .env file, or as declared).
+
+I had intended to use [Proxyquire](https://www.npmjs.com/package/proxyquire) and/or [Nock](https://www.npmjs.com/package/nock) npm modules to stub out Firebase or change its URL responses thus removing any dependency on Firebase (live). However, this proved more complicated (there are various threads on the Internet detailing
+the problems), and I didn't wish to introduce yet more dependencies (workaround npm modules created specifically for mocking firebase). Would revisit this, if this were more than a demonstration / prototype app only.
+
 
 For specfic development questions or discovered bugs, please contact *Richard Seldon* at *arcseldon@icloud.com*
 and feel free to raise an issue on the Auth0 github repository for this project. All our code is freely available
